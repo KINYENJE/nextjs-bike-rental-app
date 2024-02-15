@@ -2,13 +2,30 @@
 
 import React from 'react'
 import Themeswitcher from './ThemeSwitcher'
+import Link from 'next/link'
+
+import { Kumbh_Sans } from 'next/font/google'
+
+
+const font = Kumbh_Sans({weight: "400", subsets: ['latin']})
+
 
 const Navbar = () => {
   return (
-    <div>
-      Navbar
-      <Themeswitcher />
-    </div>
+    <nav className={` ${font.className} flex justify-between px-10  bg-transparent font-sans font-semibold text-lg  py-4 backdrop-blur-2xl w-full z-50 text-black dark:text-white fixed`}>
+      <h1 className=' tracking-widest'>BIKEY</h1>
+
+      <div className='absolute left-1/2 right-1/2 hover:shadow-2xl hover:shadow-white '>
+        <Themeswitcher />
+      </div>
+
+      <div className='gap-6 flex dark:text-dsectext'> 
+        <Link className='hover:dark:text-white hover:text-dgreen hover:shadow-2xl hover:shadow-white' href="/bikes">Bikes</Link>
+        <Link className='hover:dark:text-white hover:text-dgreen hover:shadow-2xl hover:shadow-white' href="/contact">Contact Us</Link>
+        <Link className='hover:dark:text-white hover:text-dgreen hover:shadow-2xl hover:shadow-white' href="/login">Sign In</Link>
+      </div>
+      
+    </nav>
   )
 }
 

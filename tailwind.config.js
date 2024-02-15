@@ -10,6 +10,16 @@ module.exports = {
     extend: {
       
     },
+    colors: {
+      ...require('tailwindcss/colors'),
+      dprimarybg: '#1E1E1E',
+      dsecondarybg: "rgba(11, 14, 16, 0.5)",
+      dred: "#FF3465",
+      dsectext: "rgba(255, 255, 255, 0.71)",
+      dgreen: "#14B786",
+      lsecondarybg: "rgba(205, 205, 205, 0.2)",
+
+    },
   },
   plugins: [],
 };

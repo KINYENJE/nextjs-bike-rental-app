@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
         <body className={inter.className}>
           <Provider>
             <Navbar />
-            <main className=" mx-auto max-w-5xl px-6 bg-orange-100 dark:bg-slate-900">
+            <main className=" text-black dark:text-white bg-sky-100 dark:bg-dprimarybg ">
               {children}
             </main>   
           </Provider>
