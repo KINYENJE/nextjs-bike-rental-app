@@ -12,9 +12,10 @@ export default function Home() {
 
       <div className="flex flex-row h-[100vh] text-black dark:text-white z-0 overflow-hidden">
 
-        <div className="flex flex-col text-left justify-center overflow-y-hidden w-1/2 bg-lsecondarybg dark:bg-dsecondarybg backdrop-blur-3xl z-30 ">
-          <div className=" flex flex-col h-2/3 pl-14 mt-32 ">
-            <h1 className={` ${font.className} text-4xl font-bold text-black dark:text-white leading-snug w-1/2 `}>Ride the streets <br/>  
+        <div className="flex flex-col text-left justify-center  w-1/2 bg-lsecondarybg dark:bg-dsecondarybg backdrop-blur-3xl z-30 ">
+          <div className=" flex flex-col h-full pl-14 mt-32 relative ">
+            <h1 className={` ${font.className} text-4xl font-bold text-black dark:text-white leading-snug w-1/2 tracking-wider `}>
+              Rent <span className="text-black underline underline-offset-4 decoration-white dark:text-dsectext">&</span> Ride <br/>  
             <span className="dark:text-dsectext text-stone-500">with</span> <br/>
             <span className="dark:text-dred text-dgreen tracking-wider ">BIKEY&apos;S BIKES.</span>
             </h1>
@@ -24,21 +25,20 @@ export default function Home() {
             </button>
 
 
+              <div className="-left-20 mt-52 h-[450px] w-[450px] dark:bg-dred bg-dgreen rounded-full absolute blur-3xl px-4 py-3   -z-10 overflow-hidden" ></div>
+
+            <div className="mt-16 relative right-14 h-1/3  ">
+             <Image className="" src={bikesm} alt="small bike" width={250} height={100} />
+            </div>
 
           </div> 
 
-            <div className="mb-8 h-1/3 ">
-          
-             <Image src={bikesm} alt="small bike" width={250} height={100} />
-            </div>
-
-         
-          
+           
         </div>   
 
 
-        <div className="relative">
-          <div className=" right-80 dark:bg-dred bg-dgreen rounded-full absolute top-64 blur-3xl px-4 py-3 w-[450px] h-[450px] z-10 overflow-hidden" ></div>
+        <div className="relative right-14 bg-blue-400">
+         
         </div>
 
 
