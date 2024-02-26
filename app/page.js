@@ -23,8 +23,6 @@ export default function Home() {
                     Rent a Bike
             </button>
 
-
-
           </div> 
 
             <div className="mb-8 h-1/3 ">
