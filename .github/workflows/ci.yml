@@ -1,0 +1,22 @@
+name: Linter
+
+on: [push]
+
+jobs:
+    lint:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Code Repository
+              uses: actions/checkout@v4
+      
+            - name: Setup Python
+              uses: actions/setup-python@v5
+              with:
+                python-version: '3.10'
+                cache: 'pip'
+      
+            # Run all pre-commit hooks on all the files.
+            # Getting only staged files can be tricky in case a new PR is opened
+            # since the action is run on a branch in detached head state
+            - name: Install and Run Pre-commit
+              uses: pre-commit/action@v3.0.1

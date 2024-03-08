@@ -1,0 +1,4 @@
+env/
+# ignore pycache and .pyc files
+__pycache__/
+env.sh

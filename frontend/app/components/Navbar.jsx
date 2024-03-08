@@ -19,12 +19,12 @@ const Navbar = () => {
         <Themeswitcher />
       </div>
 
-      <div className='gap-6 flex dark:text-dsectext'> 
+      <div className='gap-6 flex dark:text-dsectext'>
         <Link className='hover:dark:text-white hover:text-dgreen hover:shadow-2xl hover:shadow-white' href="/bikes">Bikes</Link>
         <Link className='hover:dark:text-white hover:text-dgreen hover:shadow-2xl hover:shadow-white' href="/contact">Contact Us</Link>
         <Link className='hover:dark:text-white hover:text-dgreen hover:shadow-2xl hover:shadow-white' href="/login">Sign In</Link>
       </div>
-      
+
     </nav>
   )
 }

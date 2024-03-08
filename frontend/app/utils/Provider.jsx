@@ -10,4 +10,3 @@ export const Provider = ({children}) => {
     </ThemeProvider>
   )
 }
-

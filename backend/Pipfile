@@ -6,6 +6,13 @@ name = "pypi"
 [packages]
 django = "*"
 django-phonenumber-field = {extras = ["phonenumbers"], version = "*"}
+django-environ = "*"
+psycopg2-binary = "*"
+pillow = "*"
+pre-commit = "*"
+dj-rest-auth = "*"
+django-allauth = "*"
+djangorestframework = "*"
 
 [dev-packages]
 

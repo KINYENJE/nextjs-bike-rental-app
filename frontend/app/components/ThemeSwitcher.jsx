@@ -16,8 +16,8 @@ const Themeswitcher = () => {
   if (!mounted) return null
 
   return (
-    <div> 
-      
+    <div>
+
       <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
         {theme === 'light' ? <LuLightbulbOff /> : <LuLightbulb />}
       </button>
