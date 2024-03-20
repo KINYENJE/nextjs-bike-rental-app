@@ -8,8 +8,8 @@ const fontSyne = Syne({weight: "400", subsets: ['latin']})
 
 const page = () => {
   return (
-    <section className='mx-11 py-16 h-[100vh] flex justify-center items-center'>
-      <div className=' shadow-lg bg-black w-[1080px] h-[500px] flex mt-10 '>
+    <section className='mx-auto container py-16 h-[100vh] flex justify-center items-center'>
+      <div className=' shadow-lg bg-black w-[1080px] h-[500px] flex  '>
         <div className='bg-white w-[550px] relative flex justify-center'> 
           <h1 className={`text-white mt-14 z-30 text-2xl tracking-widest absolute ${font.className} font-medium `}>Welcome to 
           <span className='text-dgreen dark:text-dred font-extrabold'> BIKEY!</span> </h1>
@@ -37,7 +37,7 @@ const page = () => {
               <input type="file" name="idpic" id="idpic" className='w-2/3 bg-black bg-opacity-10 placeholder:text-dsectext border-dashed border-2 border-dsectext rounded-md placeholder:text-center focus:dark:border-dred focus:border-dgreen outline-none ' />
             </div>
             <div className='w-full flex items-center gap-2'>
-              <input type="checkbox" name="owner" id="owner" />
+              <input type="checkbox" name="owner" id="owner" className='text-black accent-dgreen dark:accent-dred outline-none' />
               <label htmlFor="owner" className='text-dsectext dark:text-dsectext'>I am a bike owner</label>
             </div>
             <input type="submit" value="Sign Up" className={`w-full dark:bg-dred bg-dgreen  text-black rounded-md py-2 cursor-pointer font-extrabold ${font.className} tracking-widest`} />

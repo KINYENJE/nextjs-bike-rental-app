@@ -8,7 +8,7 @@ const fontSyne = Syne({weight: "400", subsets: ['latin']})
 
 const page = () => {
   return (
-    <section className='mx-11 py-16 h-[100vh] flex justify-center items-center'>
+    <section className='mx-auto container py-16 h-[100vh] flex justify-center items-center'>
       <div className=' shadow-lg bg-black w-[1080px] h-[500px] flex mt-10 '>
         <div className='bg-white w-[550px] relative flex justify-center'> 
           <h1 className={`text-white mt-14 z-30 text-2xl tracking-widest absolute ${font.className} font-medium `}>Welcome back to 
