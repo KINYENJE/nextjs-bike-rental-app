@@ -36,13 +36,8 @@ export const bike = {
     {
       name: 'location',
       title: 'Location',
-      type: 'array',
-      of: [
-        {
-          type: 'reference', 
-          to: [{type: 'location'}]
-        }
-      ],
+      type: 'reference',
+      to: [{type: 'location'}],
       validation: (Rule: Rule) => Rule.required().error("Location is required"),
     },
     {
@@ -55,13 +50,8 @@ export const bike = {
     {
       name: 'brand',
       title: 'Brand',
-      type: 'array',
-      of: [
-        {
-          type: 'reference', 
-          to: [{type: 'brand'}]
-        }
-      ],
+      type: 'reference',
+      to: [{type: 'brand'}],
       validation: (Rule: Rule) => Rule.required().error("Brand is required"),
     },
     {

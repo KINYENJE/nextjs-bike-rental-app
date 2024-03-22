@@ -18,12 +18,12 @@ async function getAllBikes() {
     _id,
     "imageUrl":image.asset->url,
     _createdAt,
-    brand[]->{name, _id},
+    brand->{name, _id},
     price,
     phone,
     slug,
     owner,
-    location[]->{name, _id},
+    location->{name, _id},
     bikeType->{name, _id},
     _updatedAt,
 
@@ -41,8 +41,8 @@ export const revalidate = 60;
 
 // eslint-disable-next-line @next/next/no-async-client-component
 const Page = async () => {
-  // const bikes : Bike[] = await getAllBikes()
-  const bikes : Bike[] =  BikesConstantData 
+  const bikes : Bike[] = await getAllBikes()
+  // const bikes : Bike[] =  BikesConstantData 
   console.log(bikes , 'bikes')
   
 
@@ -65,7 +65,9 @@ const Page = async () => {
           {bikes.map((bike) => (
            <>
             <BikeCard key={bike._id} {...bike} />
-            <BikeCard key={bike._id} {...bike} /></>
+            <BikeCard key={bike._id} {...bike} />
+            <BikeCard key={bike._id} {...bike} />
+            </>
 
           ))}
         </div>
@@ -75,4 +77,4 @@ const Page = async () => {
   )
 }
 
-export default Page
+export default Page 
