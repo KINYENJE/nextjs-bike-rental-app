@@ -3,6 +3,7 @@ import React from "react";
 import bikelg from "../public/bikelg.png";
 import bikesm from "../public/bikesm.png";
 import { Kumbh_Sans } from "next/font/google";
+import Link from "next/link";
 
 const font = Kumbh_Sans({ weight: "600", subsets: ["latin"] });
 
@@ -20,7 +21,7 @@ export default function Home() {
             </h1>
             
             <button className={` ${font.className} py-1 px-2 mt-8 text-md max-w-fit  dark:bg-dred bg-dgreen rounded-lg hover:shadow-dgreen hover:dark:shadow-dred shadow-[0px_4px_20px_#00000040]  font-bold text-black tracking-widest `}>   
-                    Rent a Bike
+                    <Link href="/bikes">View Bikes</Link>
             </button>
 
           </div> 

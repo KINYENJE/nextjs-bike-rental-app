@@ -3,11 +3,11 @@ import Image from 'next/image'
 import { BikeCardProps } from '../../types'
 import Link from 'next/link'
 import { GoNoEntry } from "react-icons/go";
-import { Orbitron, Tourney,  } from 'next/font/google';
+import { Orbitron , Tourney  } from 'next/font/google';
 
 const fontOrbitron = Orbitron({weight: "700", subsets: ['latin']})
 
-const fontTourney = Tourney({weight: "400", subsets: ['latin']})
+const fontTourney = Tourney({weight: "600", subsets: ['latin']})
 
 
 // {
@@ -37,11 +37,11 @@ const BikeCard : React.FC<BikeCardProps> = ({ vertical, horizontal, ...bike }) =
       <div className='px-2 '>
         <div className='flex justify-between items-center capitalize text-wrap'>
           <p className={`${fontOrbitron.className} text-sm font-semibold`}>{bike.owner}</p>
-          <p className={`text-[12px] font-bold`}> <span className=' font-light text-[10px]'>Location: </span> {bike.location[0].name}</p>
+          <p className={`text-[12px] font-bold`}> <span className=' font-light text-[10px]'>Location: </span> {bike.location.name}</p>
         </div>
 
         <div className='flex justify-between items-center mt-3 px-2 capitalize text-wrap'>
-          {bike.brand[0].name !== "not available"  ? bike.brand.map((brand) => <p key={brand._id} className={`font-bold text-xl ${fontTourney.className}`}>{brand.name}</p>) :  <p><GoNoEntry /></p> }
+          {bike.brand.name !== "not available"  ? <p className={`font-bold text-xl ${fontTourney.className} `}>{bike.brand.name}</p> :  <p><GoNoEntry /></p> }
           <button className={`bg-dgreen dark:bg-dred px-2 py-1 rounded-lg text-[16px] ${fontOrbitron.className}`} >Ksh.{bike.price} /hr</button>
         </div>
         

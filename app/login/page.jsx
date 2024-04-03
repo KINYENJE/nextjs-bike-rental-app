@@ -1,12 +1,67 @@
+"use client"
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Orbitron, Syne } from 'next/font/google'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import toast from 'react-hot-toast'
 
 const font = Orbitron({weight: "800", subsets: ['latin']})
 const fontSyne = Syne({weight: "400", subsets: ['latin']})
 
-const page = () => {
+const Page = () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const router = useRouter()
+
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    if (token) {
+      router.push('/')
+    }
+  
+  }, [router])
+
+  // clear local storage after  60 minutes
+  setTimeout(() => {
+    localStorage.clear()
+  }, 3600000)
+
+  
+  
+
+
+
+  const handleLogin = async (e) => {
+    e.preventDefault()
+    const user = {
+      email,
+      password
+    }
+    console.log(user)
+
+    const response = await fetch('http://localhost:5000/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(user)
+    })
+
+    const result = await response.json()
+    console.log(result)
+
+    if (result.status === 'ok') {
+      localStorage.setItem('token', result.token)
+      toast.success('Login successful')
+      window.location.reload()
+      router.push('/')
+    } else if (result.message === 'Error') {
+      toast.error('Login failed')
+    }
+  }
+
+
   return (
     <section className='mx-auto container py-16 h-[100vh] flex justify-center items-center'>
       <div className=' shadow-lg bg-black w-[1080px] h-[500px] flex mt-10 '>
@@ -22,13 +77,17 @@ const page = () => {
 
         <div className='w-[730px] flex flex-col px-14 items-center justify-center '>
           
-          <form className={` space-y-6 ${fontSyne.className}`}>
+          <form onSubmit={handleLogin} action="POST" className={` space-y-6 ${fontSyne.className}`}>
 
             <h1 className={`text-dgreen dark:text-dred text-2xl tracking-widest ${font.className} font-medium  `}>Sign In</h1>
             <p className='text-dsectext dark:text-dsectext pb-4'>Enter your details to sign in</p>
 
-            <input type="email" placeholder='Email Address' name='email' id='email' className='w-full bg-black bg-opacity-10 placeholder:text-dsectext placeholder:text-center border-2 border-dsectext rounded-md focus:dark:border-dred focus:border-dgreen outline-none py-2' />
-            <input type="password" placeholder='Password' name='password' id='password' className='w-full bg-black bg-opacity-10 placeholder:text-dsectext placeholder:text-center border-2 border-dsectext rounded-md focus:dark:border-dred focus:border-dgreen outline-none py-2 ' />
+            <input type="email" placeholder='Email Address' name='email' id='email'
+            value={email} onChange={(e) => setEmail(e.target.value)}
+             className='w-full bg-black bg-opacity-10 placeholder:text-dsectext placeholder:text-center border-2 border-dsectext rounded-md focus:dark:border-dred focus:border-dgreen outline-none py-2' />
+            <input type="password" placeholder='Password' name='password' id='password' 
+            value={password} onChange={(e) => setPassword(e.target.value)}
+            className='w-full bg-black bg-opacity-10 placeholder:text-dsectext placeholder:text-center border-2 border-dsectext rounded-md focus:dark:border-dred focus:border-dgreen outline-none py-2 ' />
             
             <input type="submit" value="Sign In" className={`w-full dark:bg-dred bg-dgreen  text-black rounded-md py-2 cursor-pointer font-extrabold ${font.className} tracking-widest`} />
           </form>
@@ -44,4 +103,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

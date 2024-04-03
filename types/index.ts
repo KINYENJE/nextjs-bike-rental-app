@@ -4,11 +4,12 @@ export interface Bike {
   _updatedAt: string;
   owner: string;
   phone: string;
+  description: string;
   imageUrl: string;
   slug: {current: string};
-  location: Array<Location>;
+  location?: any;
   bikeType?: any;
-  brand: Array<Brand>;
+  brand?: any;
   price: number;
 }
 

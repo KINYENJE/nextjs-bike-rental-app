@@ -23,6 +23,7 @@ async function getAllBikes() {
     phone,
     slug,
     owner,
+    description,
     location->{name, _id},
     bikeType->{name, _id},
     _updatedAt,
@@ -58,10 +59,10 @@ const Page = async () => {
       <div className='   flex justify-between items-center '>
 
         {/** filter section */}
-       <FilterList />
+       {/* <FilterList /> */}
 
        
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 gap-y-10 w-2/3'>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 gap-y-10 w-full'>
           {bikes.map((bike) => (
            <>
             <BikeCard key={bike._id} {...bike} />

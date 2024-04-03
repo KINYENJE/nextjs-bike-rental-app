@@ -5,6 +5,7 @@ import { Orbitron , Tourney, Syne  } from 'next/font/google';
 import Image from 'next/image';
 import { GoNoEntry } from 'react-icons/go';
 import { BlackTriangle } from '../../components/icons'
+import BookingForm from '../../components/BookingForm';
 
 const fontOrbitron = Orbitron({ weight: '600', subsets: ['latin'] })
 const fontTourney = Tourney({ weight: '600', subsets: ['latin'] })
@@ -71,18 +72,8 @@ const page = async ({params}) => {
 
           {/** form fiels for booking time and price */}
           <div className='relative top-20'>
-            <form action="" className='flex bg-sky-100 dark:bg-black opacity-80  rounded-full pt-6 px-10 py-2 gap-3 shadow-2xl '>
-              <div className='w-3/4 flex flex-col'>
-                <label htmlFor="" className='text-black dark:text-white'>Booking Time: </label>
-                <input type="time" placeholder='Enter your booking time' className=' p-2 my-2 rounded-full' />
-              </div>
-              <div className='w-1/4'>
-                <label htmlFor="" className='text-black dark:text-white'>Price: </label>
-                <button  type='submit' className='bg-dgreen dark:bg-dred font-medium p-2 rounded-full my-2 capitalize text-black'>
-                   {bike.price}/hr.
-                </button>
-              </div>
-            </form>
+            
+            <BookingForm price={bike.price} bikeId={bike._id} bikeOwner={bike.owner} bikeType={bike.bikeType.name} bikeLocation={bike.location.name} />
           </div>
           
         </div>
