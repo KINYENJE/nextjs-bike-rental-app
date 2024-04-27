@@ -1,46 +1,47 @@
 "use client"
 
-import React , { useState, useEffect } from 'react'
+import React , { useState } from 'react'
 import { BikesConstantData, LocationsConstantData, BrandsConstantData,BikeTypesConstantData } from '../constants';
-import { client } from '../../sanity/lib/client';
-import { Bike, BikeType, Brand } from '../../types';
+// import { client } from '../../sanity/lib/client';
+import { Bike } from '../../types';
+// import { BikeType, Brand} from '../../types';
 
 
 
 
 
-  async function getAllLocations() {
-    const query = `*[_type == "location"] {
-      _id,
-      name,
-      slug,
-  }`
+  // async function getAllLocations() {
+  //   const query = `*[_type == "location"] {
+  //     _id,
+  //     name,
+  //     slug,
+  // }`
   
-    const locations = await client.fetch(query)
-    return locations
-  }
+  //   const locations = await client.fetch(query)
+  //   return locations
+  // }
   
-  async function getAllBikeTypes() {
-    const query = `*[_type == "bikeType"] {
-      _id,
-      name,
-      slug,
-  }`
+  // async function getAllBikeTypes() {
+  //   const query = `*[_type == "bikeType"] {
+  //     _id,
+  //     name,
+  //     slug,
+  // }`
   
-    const bikeTypes = await client.fetch(query)
-    return bikeTypes
-  }
+  //   const bikeTypes = await client.fetch(query)
+  //   return bikeTypes
+  // }
   
-  async function getAllBrands() {
-    const query = `*[_type == "brand"] {
-      _id,
-      name,
-      slug,
-  }`
+  // async function getAllBrands() {
+  //   const query = `*[_type == "brand"] {
+  //     _id,
+  //     name,
+  //     slug,
+  // }`
   
-    const brands = await client.fetch(query)
-    return brands
-  }
+  //   const brands = await client.fetch(query)
+  //   return brands
+  // }
 
 
 
