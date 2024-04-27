@@ -86,7 +86,7 @@ const FilterList = () => {
     name: string;
     slug: {
       current: string;
-      _type: string;
+      _type?: string;
     };
   }
   
@@ -106,14 +106,14 @@ const FilterList = () => {
               </option>
             ))}
           </select>
-          <select name="brand" id="brand" className='border-2 border-gray-200 rounded-lg'>
+          <select name="brand" aria-label="Brand" id="brand" className='border-2 border-gray-200 rounded-lg'>
             <option value="all">All</option>
             <option value="giant">Giant</option>
             <option value="trek">Trek</option>
             <option value="specialized">Specialized</option>
             <option value="cannondale">Cannondale</option>
           </select>
-          <select name="type" id="type" className='border-2 border-gray-200 rounded-lg'>
+          <select name="type" aria-label="Type" id="type" className='border-2 border-gray-200 rounded-lg'>
             <option value="all">All</option>
             <option value="racing">Racing</option>
             <option value="mountain">Mountain</option>
