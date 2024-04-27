@@ -18,6 +18,8 @@ module.exports = {
       dsectext: "rgba(255, 255, 255, 0.71)",
       dgreen: "#14B786",
       lsecondarybg: "rgba(205, 205, 205, 0.2)",
+      faintBlack: "rgba(0, 0, 0, 0.5)",
+      faintWhite: "rgba(255, 255, 255, 0.7)",
 
     },
   },
