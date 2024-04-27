@@ -147,7 +147,7 @@ const handleDelete = async (id) => {
             <p className={`text-dgreen ${fontOrbitron.className} dark:text-white capitalize text-sm font-bold`}>
               <span className='text-xs pr-2 text-stone-600 font-extrabold'>Status:</span>
               {booking.status}</p>
-            {/* <button onClick={() => handleStatusChange(booking._id)} className='bg-dgreen dark:bg-dred text-black dark:text-white rounded-lg px-2 py-1'>Change Status</button> */}
+            <button onClick={() => handleStatusChange(booking._id)} className='bg-dgreen dark:bg-dred text-black dark:text-white rounded-lg px-2 py-1'>Change Status</button>
             <button onClick={() => handleDelete(booking._id)} className='bg-dgreen dark:bg-dred text-black dark:text-white rounded-lg px-2 py-2'><BsTrash3 /></button>
           </div>
 

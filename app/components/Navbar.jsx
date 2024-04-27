@@ -9,7 +9,6 @@ import { Kumbh_Sans } from 'next/font/google'
 // import { useRouter } from 'next/navigation'
 // hamburger menu from react-icons
 import { FaBars } from 'react-icons/fa'
-import { set } from 'sanity'
 
 
 
@@ -46,7 +45,8 @@ const Navbar = () => {
   }
 
   useEffect(() => {
-    if (localStorage.getItem('token')) {
+    // check if user is logged in
+    if (typeof window !== "undefined" && localStorage.getItem('token')) { 
       setIsLogged(true)
       checkUserInfo()
     } else {
@@ -78,22 +78,23 @@ const Navbar = () => {
           <ul className='flex flex-col gap-2 divide-y-2 items-center justify-center'>
             
             <li className='hover:bg-dgreen dark:hover:bg-dred'><Link href='/bikes' onClick={() => setIsOpen(!isOpen)}>Bikes</Link></li>
-            {localStorage.getItem('token') === null && <li className='hover:bg-dgreen dark:hover:bg-dred'><Link href='/login' onClick={() => setIsOpen(!isOpen)}>Login</Link></li>}
+            {typeof window !== 'undefined' && localStorage.getItem('token') === null && <li className='hover:bg-dgreen dark:hover:bg-dred'><Link href='/login' onClick={() => setIsOpen(!isOpen)}>Login</Link></li>}
             {/* <li className='hover:bg-dgreen dark:hover:bg-dred'><Link href='/about'>About</Link></li>
             <li className='hover:bg-dgreen dark:hover:bg-dred'><Link href='/contact'>Contact</Link></li> */}
             <li className='hover:bg-dgreen dark:hover:bg-dred'><Link href='/bookings' onClick={() => setIsOpen(!isOpen)}>My Bookings</Link></li>
             {isOwner && <li className='hover:bg-dgreen dark:hover:bg-dred'><Link href='/studio' onClick={() => setIsOpen(!isOpen)}>Studio</Link></li>}
-            {localStorage.getItem('token') && <li className='bg-dgreen dark:bg-dred px-6 my-2 rounded-lg' onClick={() => setIsOpen(!isOpen)}><button onClick={handleLogout}>Logout</button></li>}
+            {typeof window !== 'undefined' && localStorage.getItem('token') && <li className='bg-dgreen dark:bg-dred px-6 my-2 rounded-lg' onClick={() => setIsOpen(!isOpen)}><button onClick={handleLogout}>Logout</button></li>}
           </ul>
-        </div>
+        </div> 
+        
       </div>
 
       <div className='gap-6 flex dark:text-dsectext max-md:hidden'> 
       <Link className={`${isActive('/bikes') ? 'text-dgreen dark:text-dred' : 'text-black dark:text-white'} hover:dark:text-white hover:text-dgreen hover:shadow-2xl hover:shadow-white`} href="/bikes">Bikes</Link>
-      {!isOwner && <Link className={`${isActive('/about') ? 'text-dgreen dark:text-dred' : 'text-black dark:text-white'} hover:dark:text-white hover:text-dgreen hover:shadow-2xl hover:shadow-white`} href="/bookings">My Bookings</Link>}
+      {isLogged && !isOwner && <Link className={`${isActive('/about') ? 'text-dgreen dark:text-dred' : 'text-black dark:text-white'} hover:dark:text-white hover:text-dgreen hover:shadow-2xl hover:shadow-white`} href="/bookings">My Bookings</Link>}
         {isOwner && <Link className={`${isActive('/studio') ? 'text-dgreen dark:text-dred' : 'text-black dark:text-white'} hover:dark:text-white hover:text-dgreen hover:shadow-2xl hover:shadow-white`} href="/studio">Studio</Link>}
         {/* <Link className={`${isActive('/contact') ? 'text-dgreen dark:text-dred' : 'text-black dark:text-white'} hover:dark:text-white hover:text-dgreen hover:shadow-2xl hover:shadow-white`} href="/contact">Contact Us</Link> */}
-        {localStorage.getItem('token') ? 
+        {typeof window !== 'undefined' && localStorage.getItem('token') ?  
         <button onClick={handleLogout} className='bg-dgreen dark:bg-dred font-medium  rounded-lg px-2  capitalize text-black'>Logout</button> : <span>
           <Link className={`${isActive('/login') ? 'text-dgreen dark:text-dred' : 'text-black dark:text-white'} hover:dark:text-white hover:text-dgreen hover:shadow-2xl hover:shadow-white`} href="/login">Log In</Link>/
           <Link className={`${isActive('/signup') ? 'text-dgreen dark:text-dred' : 'text-black dark:text-white'} hover:dark:text-white hover:text-dgreen hover:shadow-2xl hover:shadow-white`} href="/signup">Sign Up</Link>

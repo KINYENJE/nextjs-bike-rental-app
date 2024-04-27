@@ -1,14 +1,14 @@
 
 
-import React, { useState } from 'react'
+import React from 'react'
 import { client } from '../../sanity/lib/client'
-import { Bike , Location} from '../../types';
-import Image from 'next/image';
-import { urlForImage } from '../../sanity/lib/image';
+import { Bike } from '../../types';
+// import Image from 'next/image';
+// import { urlForImage } from '../../sanity/lib/image';
 import BikeCard from '../components/BikeCard';
-import FilterList from '../components/FilterList';
+// import FilterList from '../components/FilterList';
 
-import { BikesConstantData } from '../constants';
+// import { BikesConstantData } from '../constants';
 
 
 
