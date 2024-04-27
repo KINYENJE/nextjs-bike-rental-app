@@ -1,7 +1,7 @@
 "use client"
 
 import React , { useState } from 'react'
-import { BikesConstantData, LocationsConstantData, BrandsConstantData,BikeTypesConstantData } from '../constants';
+import { LocationsConstantData, BrandsConstantData,BikeTypesConstantData } from '../constants';
 // import { client } from '../../sanity/lib/client';
 import { Bike } from '../../types';
 // import { BikeType, Brand} from '../../types';
@@ -57,28 +57,26 @@ const FilterList = () => {
   console.log(brands, 'brands')
 
 
-  const [bikes, setBikes] = useState([...BikesConstantData])
-  console.log(bikes, 'bikes222')
-  const [selectedLocation, setSelectedLocation] = useState<string>('All')
-  const [selectedBrand, setSelectedBrand] = useState<string>('All')
-  const [selectedType, setSelectedType] = useState<string>('All')
+  // const [selectedLocation, setSelectedLocation] = useState<string>('All')
+  // const [selectedBrand, setSelectedBrand] = useState<string>('All')
+  // const [selectedType, setSelectedType] = useState<string>('All')
 
 
-  const FetchByLocation = (e:any ) => {
-    setSelectedLocation(e.target.value)
+  // const FetchByLocation = (e:any ) => {
+  //   setSelectedLocation(e.target.value)
 
 
-    {/** to filter the array location attribute in bikes array */}
-    if(e.target.value === 'all'){
-      setBikes([...BikesConstantData])
-    }else{
-      const filteredBikes = BikesConstantData.filter((bike: Bike) => bike.location[0].slug.current === e.target.value.toLowerCase())
-      setBikes(filteredBikes)
-    }
+  //   {/** to filter the array location attribute in bikes array */}
+  //   if(e.target.value === 'all'){
+  //     setBikes([...BikesConstantData])
+  //   }else{
+  //     const filteredBikes = BikesConstantData.filter((bike: Bike) => bike.location[0].slug.current === e.target.value.toLowerCase())
+  //     setBikes(filteredBikes)
+  //   }
 
-    return 
+  //   return 
 
-  }
+  // }
 
 
   interface MyLocation {
@@ -98,7 +96,7 @@ const FilterList = () => {
   return (
     <div className='flex flex-col items-center space-x-4 bg-red-700'>
           <p>Filter by:</p>
-          <select title='location' name="location" id="location" className='border-2 border-gray-200 rounded-lg' onChange={FetchByLocation}>
+          <select title='location' name="location" id="location" className='border-2 border-gray-200 rounded-lg' >
             <option value="all">All</option>
             {locations.map((location: MyLocation) => (
               <option key={location._id} value={location.slug.current}>
