@@ -8,8 +8,6 @@ import { Bike } from '../../types';
 
 
 
-
-
   // async function getAllLocations() {
   //   const query = `*[_type == "location"] {
   //     _id,
