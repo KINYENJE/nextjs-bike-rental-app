@@ -29,7 +29,8 @@ const BookingForm = ({price, bikeId, bikeType, bikeOwner, bikeLocation }) => {
     }
     console.log(booking)
 
-    const response = await fetch('http://localhost:5000/api/booking', {
+    // const response = await fetch('http://localhost:5000/api/booking', {
+    const response = await fetch('https://api-bike-rental.vercel.app/api/booking', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
