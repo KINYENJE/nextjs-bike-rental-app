@@ -30,7 +30,7 @@ const Navbar = () => {
   
   const checkUserInfo = () => {
 
-    fetch('http://localhost:5000/api/userdata', {
+    fetch('https://api-bike-rental.vercel.app/api/userdata', {
       method: 'GET',
       headers: {
         'Content-Type': 'application',

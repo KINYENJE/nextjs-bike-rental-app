@@ -27,25 +27,29 @@ const Page = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const user = {
-      firstName,
-      lastName,
-      username,
-      phone,
-      email,
-      password,
-      idNumber,
-      idPic,
-      isOwner
+    const formData = new FormData();
+    formData.append('firstName', firstName);
+    formData.append('lastName', lastName);
+    formData.append('username', username);
+    formData.append('phone', phone);
+    formData.append('email', email);
+    formData.append('password', password);
+    formData.append('idNumber', idNumber);
+    formData.append('isOwner', isOwner);
+
+    // Get the file from the input
+    const fileInput = document.getElementById('idpic');
+    if (fileInput && fileInput.files && fileInput.files[0]) {
+      formData.append('idPic', fileInput.files[0]);
     }
+
+    const user = formData;
     console.log(user)
 
     const response = await fetch('https://api-bike-rental.vercel.app/api/signup', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(user)
+      
+      body: formData,
     })
 
     const result = await response.json()
@@ -56,6 +60,8 @@ const Page = () => {
       router.push('/login')
     } else if (result.message === 'Error') {
       toast.error('Signup failed')
+    } else {
+      toast.error(result.message)
     }
   
   }
@@ -100,7 +106,7 @@ const Page = () => {
               value={idNumber} onChange={(e) => setIdNumber(e.target.value)}
                name='idnumber' id='idnumber' className='w-1/3 bg-black bg-opacity-10 placeholder:text-dsectext border-2 border-dsectext rounded-md placeholder:text-center focus:dark:border-dred focus:border-dgreen outline-none ' />
               {/** upload picture */}
-              <input type="file" name="idpic"
+              <input type="file" name="idpic" accept='image/*'
               value={idPic} onChange={(e) => setIdPic(e.target.value)}
                id="idpic" className='w-2/3 bg-black bg-opacity-10 placeholder:text-dsectext border-dashed border-2 border-dsectext rounded-md placeholder:text-center focus:dark:border-dred focus:border-dgreen outline-none ' />
             </div>
