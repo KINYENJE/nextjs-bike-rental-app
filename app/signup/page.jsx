@@ -1,10 +1,12 @@
 "use client";
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Orbitron, Syne } from 'next/font/google'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
 import { useRouter } from  'next/navigation'
+import { FcGoogle } from "react-icons/fc";
+import { useSession, signIn, signOut } from 'next-auth/react';
 
 const font = Orbitron({weight: "800", subsets: ['latin']})
 const fontSyne = Syne({weight: "400", subsets: ['latin']})
@@ -22,6 +24,18 @@ const Page = () => {
   const [idNumber, setIdNumber] = useState('')
   const [idPic, setIdPic] = useState('')
   const [isOwner, setIsOwner] = useState(false)
+
+  const { data: session } = useSession();
+
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+  useEffect(() => {
+    if (session?.user) {
+      setFirstName(session.user.name?.split(' ')[0] || '');
+      setLastName(session.user.name?.split(' ')[1] || '');
+      setEmail(session.user.email || '');
+    }
+  }, [session]);
 
   const router = useRouter()
 
@@ -46,7 +60,7 @@ const Page = () => {
     const user = formData;
     console.log(user)
 
-    const response = await fetch('https://api-bike-rental.vercel.app/api/signup', {
+    const response = await fetch(`${API_URL}/api/signup`, {
       method: 'POST',
       
       body: formData,
@@ -70,7 +84,7 @@ const Page = () => {
 
   return (
     <section className='mx-auto container py-16 h-[100vh] flex justify-center items-center'>
-      <div className=' shadow-lg bg-black w-[1080px] h-[500px] flex  '>
+      <div className=' shadow-lg bg-black w-[1080px] p-4 flex  '>
         <div className='bg-white w-[550px] relative flex justify-center'> 
           <h1 className={`text-white mt-14 z-30 text-2xl tracking-widest absolute ${font.className} font-medium `}>Welcome to 
           <span className='text-dgreen dark:text-dred font-extrabold'> BIKEY!</span> </h1>
@@ -82,8 +96,24 @@ const Page = () => {
         </div>
 
         <div className='w-[730px] flex flex-col px-14 items-center justify-center '>
+
+          <button
+            type="button"
+            onClick={() => signIn("google")}
+            className={`w-full flex items-center justify-center gap-2 py-2 rounded-md bg-white border border-dsectext hover:bg-dgreen hover:text-white transition-colors font-bold dark:text-black hover:dark:bg-dred ${font.className}`}
+          >
+            <FcGoogle className='text-2xl' />
+            Sign Up with Google
+          </button>
+
+          {/* Or  */}
+          <div className='w-full flex items-center justify-between my-6'>
+            <hr className='w-[45%] border-dsectext dark:border-dsectext' />
+            <span className='text-dsectext dark:text-dsectext'>OR</span>
+            <hr className='w-[45%] border-dsectext dark:border-dsectext' />
+          </div>
           
-          <form className={` space-y-6 ${fontSyne.className}`} action="POST" onSubmit={handleSubmit}>
+          <form className={` space-y-6 text-faintWhite ${fontSyne.className}`} action="POST" onSubmit={handleSubmit}>
             <div className='flex w-full space-x-12'>
               <input type="text" placeholder='First Name' name='fname' id='fname' 
               value={firstName} onChange={(e) => setFirstName(e.target.value)}

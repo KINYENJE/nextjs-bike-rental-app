@@ -15,10 +15,12 @@ const BookingCard = () => {
  
   const [status, setStatus] = useState('pending')
 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 
 
   const findBookings = async () => {
-    const response = await fetch('http://localhost:5000/api/bookings', {
+    const response = await fetch(`${API_URL}/api/bookings`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application ',
@@ -67,7 +69,7 @@ const handleStatusChange = async (id) => {
     status
   }
   console.log(booking)
-  const response = await fetch(`http://localhost:5000/api/booking/${id}`, {
+  const response = await fetch(`${API_URL}/api/booking/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -86,7 +88,7 @@ const handleStatusChange = async (id) => {
 }
 
 const handleDelete = async (id) => {
-  const response = await fetch(`http://localhost:5000/api/booking/${id}`, {
+  const response = await fetch(`${API_URL}/api/booking/${id}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
