@@ -27,13 +27,38 @@ const Page = () => {
 
   const { data: session } = useSession();
 
+  const isAlreadyUser = !!session?.user;
+
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
     if (session?.user) {
-      setFirstName(session.user.name?.split(' ')[0] || '');
-      setLastName(session.user.name?.split(' ')[1] || '');
-      setEmail(session.user.email || '');
+      // check if user exists in db using the email and update the relevant fields if not update field with session data
+      try {
+        fetch(`${API_URL}/api/check-user?email=${session.user.email}`)
+          .then(res => res.json())
+          .then(data => {
+            if (data.exists) {
+              setFirstName(data.user.firstName || '');
+              setLastName(data.user.lastName || '');
+              setUsername(data.user.username || '');
+              setPhone(data.user.phone || '');
+              setEmail(session.user.email);
+              setIdNumber(data.user.idNumber || '');
+              setIsOwner(data.user.isOwner || false);
+            } else {
+              setEmail(session.user.email);
+              setFirstName(session.user.name?.split(' ')[0] || '');
+              setLastName(session.user.name?.split(' ')[1] || '');
+              setUsername(session.user.name || '');
+            }
+          });
+        
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        toast.error('Failed to fetch user data. Please try again later.');     
+      }
+      
     }
   }, [session]);
 
@@ -47,9 +72,11 @@ const Page = () => {
     formData.append('username', username);
     formData.append('phone', phone);
     formData.append('email', email);
-    formData.append('password', password);
     formData.append('idNumber', idNumber);
     formData.append('isOwner', isOwner);
+    if (!isAlreadyUser) {
+      formData.append('password', password);
+    }
 
     // Get the file from the input
     const fileInput = document.getElementById('idpic');
@@ -96,6 +123,15 @@ const Page = () => {
         </div>
 
         <div className='w-[730px] flex flex-col px-14 items-center justify-center '>
+          {isAlreadyUser && (
+            <button
+              type="button"
+              onClick={() => router.push('/')}
+              className={`mb-4 w-full py-2 rounded-md bg-dgreen dark:bg-dred text-black font-bold hover:bg-dgreen/80 transition-colors ${font.className}`}
+            >
+              Proceed to Homepage
+            </button>
+          )}
 
           <button
             type="button"
@@ -128,9 +164,11 @@ const Page = () => {
             <input type="email" placeholder='Email Address' 
             value={email} onChange={(e) => setEmail(e.target.value)}
             name='email' id='email' className='w-full bg-black bg-opacity-10 placeholder:text-dsectext placeholder:text-center border-2 border-dsectext rounded-md focus:dark:border-dred focus:border-dgreen outline-none ' />
-            <input type="password" placeholder='Password' 
-            value={password} onChange={(e) => setPassword(e.target.value)}
-            name='password' id='password' className='w-full bg-black bg-opacity-10 placeholder:text-dsectext placeholder:text-center border-2 border-dsectext rounded-md focus:dark:border-dred focus:border-dgreen outline-none ' />
+            {!isAlreadyUser && (
+              <input type="password" placeholder='Password' 
+              value={password} onChange={(e) => setPassword(e.target.value)}
+              name='password' id='password' className='w-full bg-black bg-opacity-10 placeholder:text-dsectext placeholder:text-center border-2 border-dsectext rounded-md focus:dark:border-dred focus:border-dgreen outline-none ' />
+            )}
             <div className='flex w-full space-x-12'>
               <input type="text" placeholder='Nat Id No.'
               value={idNumber} onChange={(e) => setIdNumber(e.target.value)}

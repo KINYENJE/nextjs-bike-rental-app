@@ -38,52 +38,71 @@ const Page = () => {
   }, [session, router]);
 
 
-  useEffect(() => {
-    const token = localStorage.getItem('token')
-    if (token) {
-      router.push('/')
-    }
+  // useEffect(() => {
+  //   const token = localStorage.getItem('token')
+  //   if (token) {
+  //     router.push('/')
+  //   }
   
-  }, [router])
+  // }, [router])
 
-  // clear local storage after  60 minutes
-  setTimeout(() => {
-    localStorage.clear()
-  }, 3600000)
+  // // clear local storage after  60 minutes
+  // setTimeout(() => {
+  //   localStorage.clear()
+  // }, 3600000)
 
   
   
 
 
 
+  // const handleLogin = async (e) => {
+  //   e.preventDefault()
+  //   const user = {
+  //     email,
+  //     password
+  //   }
+  //   console.log(user)
+
+  //   const response = await fetch(`${API_URL}/api/login`, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify(user)
+  //   })
+
+  //   const result = await response.json()
+  //   console.log(result)
+
+  //   if (result.status === 'ok') {
+  //     localStorage.setItem('token', result.token)
+  //     toast.success('Login successful')
+  //     window.location.reload()
+  //     router.push('/')
+  //   } else if (result.message === 'Error') {
+  //     toast.error('Login failed')
+  //   }
+  // }
+
+  
   const handleLogin = async (e) => {
     e.preventDefault()
-    const user = {
+    const result = await signIn("credentials", {
+      redirect: false,
       email,
-      password
+      password,
+    });
+    if (result.ok) {
+      toast.success('Login successful');
+      // navigate back to previous page
+      router.push('/');
+    } else if (result.error) {
+      toast.error(result.error);
+    } else {
+      toast.error('Login failed');
     }
-    console.log(user)
-
-    const response = await fetch(`${API_URL}/api/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(user)
-    })
-
-    const result = await response.json()
-    console.log(result)
-
-    if (result.status === 'ok') {
-      localStorage.setItem('token', result.token)
-      toast.success('Login successful')
-      window.location.reload()
-      router.push('/')
-    } else if (result.message === 'Error') {
-      toast.error('Login failed')
-    }
-  }
+  };
 
 
   return (

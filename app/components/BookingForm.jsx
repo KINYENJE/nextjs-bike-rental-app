@@ -1,6 +1,8 @@
 "use client"
 import React, {useState} from 'react'
 import toast from 'react-hot-toast'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 const BookingForm = ({price, bikeId, bikeType, bikeOwner, bikeLocation }) => {
   const [startDate, setStartDate] = useState('')
@@ -8,8 +10,49 @@ const BookingForm = ({price, bikeId, bikeType, bikeOwner, bikeLocation }) => {
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  const checkIdPic = async () => {
+    const email = session.user.email;
+    console.log("User email:", email);
+
+    if (!email) {
+      toast.error('Please sign in to book a bike')
+      return false
+    }
+      const response = await fetch(`${API_URL}/api/check-user?email=${encodeURIComponent(email)}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+    const data = await response.json()
+    console.log("Check ID Pic response:", data);
+    if (data.user.idPic) {
+      return true
+    }
+    toast.error('Please upload your ID picture before booking a bike.')
+    router.push('/signup')
+    return false
+  }
+
+
   const handleBooking = async (e) => {
     e.preventDefault()
+
+    // check if user is sign in and if not, show toast message
+    if (!session || !session.user || !session.user.email) {
+      toast.error('Please sign in to book a bike')
+      return
+    }
+
+    // for signed in users check if idpic is available in database
+    const hasIdPic = await checkIdPic()
+    if (!hasIdPic) {
+      return
+    }
+
     
     const startTime = new Date(startDate).getTime()
     const endTime = new Date(endDate).getTime()
