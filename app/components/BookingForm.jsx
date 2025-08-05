@@ -29,12 +29,20 @@ const BookingForm = ({price, bikeId, bikeType, bikeOwner, bikeLocation }) => {
     });
     const data = await response.json()
     console.log("Check ID Pic response:", data);
-    if (data.user.idPic) {
+    
+    if (data.exists === true && data.user.idPic) {
       return true
+    } else if (data.exists === true && !data.user.idPic) {
+      console.error("ID picture not found for user:", email);
+      toast.error('Please upload your ID picture before booking a bike.')
+      router.push('/signup')
+      return false
+    } else if (data.exists === false) {
+      console.error("User not found:", email);
+      toast.error('User not found. Please sign up first.')
+      router.push('/signup')
+      return false
     }
-    toast.error('Please upload your ID picture before booking a bike.')
-    router.push('/signup')
-    return false
   }
 
 
@@ -78,7 +86,7 @@ const BookingForm = ({price, bikeId, bikeType, bikeOwner, bikeLocation }) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'authorization': localStorage.getItem('token')
+        
       },
       body: JSON.stringify(booking)
     })

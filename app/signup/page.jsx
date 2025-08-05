@@ -100,7 +100,7 @@ const Page = () => {
       toast.success('Signup successful')
       router.push('/login')
     } else if (result.message === 'Error') {
-      toast.error('Signup failed')
+      toast.error(`Signup failed: ${result.error || 'Check your details and try again'}`);
     } else {
       toast.error(result.message)
     }
