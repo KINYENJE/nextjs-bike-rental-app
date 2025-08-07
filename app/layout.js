@@ -1,9 +1,9 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Provider } from "./utils/Provider";  // "use client"
+import { Provider } from "../lib/utils/Provider";  // "use client"
 import Navbar from "./components/Navbar";
 import { Toaster } from "react-hot-toast";
-import SessionWrapper from "./utils/SessionWrapper"; // "use client"
+import SessionWrapper from "../lib/utils/SessionWrapper"; // "use client"
 
 const inter = Inter({ subsets: ["latin"] });
 

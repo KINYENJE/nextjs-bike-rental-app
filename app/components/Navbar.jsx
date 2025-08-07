@@ -9,6 +9,8 @@ import { FaBars } from 'react-icons/fa'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { signOut } from 'next-auth/react'
+import { Sheet, SheetTrigger, SheetContent } from './ui/sheet'
+import { FaSignOutAlt } from 'react-icons/fa'
 
 const font = Kumbh_Sans({weight: "400", subsets: ['latin']})
 
@@ -74,47 +76,76 @@ const Navbar = () => {
 
   return (
     <nav className={` ${font.className} flex justify-between px-10 2xl:px-20 bg-transparent font-sans font-semibold text-lg py-4 backdrop-blur-2xl w-full z-50 text-black dark:text-white fixed 2xl:text-xl`}>
-      <Link href={`/`} className='tracking-widest'>BIKEY</Link>
+      <div>
+        <Link href={`/`} className='tracking-widest bg-red-500 '>BIKEY</Link>
+      </div>
+
       <div className='absolute left-1/2 right-1/2 hover:shadow-2xl hover:shadow-white '>
         <Themeswitcher />
       </div>
-      {/* hamburger menu */}
-      <div className='flex items-center'>
-        <FaBars className='text-2xl cursor-pointer md:hidden font-extralight' onClick={() => setIsOpen(!isOpen)} />
-        <div className={`absolute rounded-lg z-50 top-16 right-0 bg-faintWhite dark:bg-faintBlack text-black backdrop-blur-xl backdrop-brightness-125 px-20 py-5 dark:text-white transition duration-700 ease-in-out border-2 border-stone-500 ${isOpen ? 'translate-x-5' : 'translate-x-80'} `}>
-          <ul className='flex flex-col gap-2 divide-y-2 items-center justify-center'>
-            <li className='hover:bg-dgreen dark:hover:bg-dred'><Link href='/bikes' onClick={() => setIsOpen(!isOpen)}>Bikes</Link></li>
-            {typeof window !== 'undefined' && localStorage.getItem('token') === null && <li className='hover:bg-dgreen dark:hover:bg-dred'><Link href='/login' onClick={() => setIsOpen(!isOpen)}>Login</Link></li>}
-            <li className='hover:bg-dgreen dark:hover:bg-dred'><Link href='/bookings' onClick={() => setIsOpen(!isOpen)}>My Bookings</Link></li>
-            {isOwner && <li className='hover:bg-dgreen dark:hover:bg-dred'><Link href='/studio' onClick={() => setIsOpen(!isOpen)}>Studio</Link></li>}
-            {typeof window !== 'undefined' && localStorage.getItem('token') && <li className='bg-dgreen dark:bg-dred px-6 my-2 rounded-lg' onClick={() => setIsOpen(!isOpen)}><button onClick={handleLogout}>Logout</button></li>}
-          </ul>
-        </div> 
-      </div>
-      <div className='gap-6 flex dark:text-dsectext max-md:hidden items-center'> 
-        <Link className={`${isActive('/bikes') ? 'text-dgreen dark:text-dred' : 'text-black dark:text-white'} hover:dark:text-white hover:text-dgreen hover:shadow-2xl hover:shadow-white`} href="/bikes">Bikes</Link>
-        {isLogged && !isOwner && <Link className={`${isActive('/about') ? 'text-dgreen dark:text-dred' : 'text-black dark:text-white'} hover:dark:text-white hover:text-dgreen hover:shadow-2xl hover:shadow-white`} href="/bookings">My Bookings</Link>}
-        {isOwner && <Link className={`${isActive('/studio') ? 'text-dgreen dark:text-dred' : 'text-black dark:text-white'} hover:dark:text-white hover:text-dgreen hover:shadow-2xl hover:shadow-white`} href="/studio">Studio</Link>}
+      
+      <div className='gap-6 flex dark:text-dsectext items-center'> 
         {/* Avatar and dropdown */}
         {isLogged ? (
-          <div className="relative">
-            <button onClick={() => setShowDropdown(!showDropdown)} className="rounded-full border-2 border-dgreen dark:border-dred w-10 h-10 flex items-center justify-center overflow-hidden bg-white dark:bg-black">
-              {session?.user?.image ? (
-                <Image src={session.user.image} alt="avatar" width={40} height={40} className="rounded-full object-cover" />
-              ) : (
-                <span className="text-xl font-bold">{session?.user?.name?.charAt(0) || "U"}</span>
-              )}
-            </button>
-            {showDropdown && (
-              <div className="absolute right-0 mt-2 w-40 bg-faintWhite dark:bg-faintBlack rounded-lg shadow-lg border border-dgreen dark:border-dred transition-all duration-300 z-50">
-                <button onClick={handleLogout} className="w-full px-4 py-2 text-left hover:bg-dgreen hover:text-white dark:hover:bg-dred rounded-lg">Logout</button>
+          <Sheet>
+            <SheetTrigger asChild>
+              <button className="rounded-full border-2 border-dgreen dark:border-dred w-10 h-10 flex items-center justify-center overflow-hidden bg-white dark:bg-black">
+                {session?.user?.image ? (
+                  <Image src={session.user.image} alt="avatar" width={40} height={40} className="rounded-full object-cover" />
+                ) : (
+                  <span className="text-xl font-bold">{session?.user?.name?.charAt(0) || "U"}</span>
+                )}
+              </button>
+            </SheetTrigger>
+            <SheetContent
+              side="right"
+              className="bg-transparent bg-opacity-30 text-black dark:text-white/80 backdrop-blur-lg border border-dprimarybg shadow-lg flex flex-col justify-between p-0"
+            >
+              {/* Header */}
+              <div className="p-6 border-b border-dgreen dark:border-dred">
+                <h2 className="text-xl font-bold mb-2">Hello, {session?.user?.name?.split(" ")[0] || "User"} 👋</h2>
+                <p className="text-dsectext">Welcome to BIKEY!</p>
               </div>
-            )}
-          </div>
+              {/* Sheet Content */}
+              <div className="flex-1 flex flex-col gap-4 p-6">
+                <Link href="/bikes" className="hover:text-dgreen dark:hover:text-dred font-semibold">Bikes</Link>
+                <Link href="/profile" className="hover:text-dgreen dark:hover:text-dred font-semibold">Profile</Link>
+                <Link href="/bookings" className="hover:text-dgreen dark:hover:text-dred font-semibold">My Bookings</Link>
+                {isOwner && <Link className={`${isActive('/studio') ? 'text-dgreen dark:text-dred' : 'text-black dark:text-white'} hover:dark:text-white hover:text-dgreen hover:shadow-2xl hover:shadow-white`} href="/studio">Studio</Link>}
+                <Link href="/history" className="hover:text-dgreen dark:hover:text-dred font-semibold">History</Link>
+                {isOwner && <Link href="/studio" className="hover:text-dgreen dark:hover:text-dred font-semibold">Studio</Link>}
+                {/* Add more links as needed */}
+              </div>
+              {/* Footer */}
+              <div className="flex items-center gap-4 p-6 border-t border-dgreen dark:border-dred">
+                <div className="flex items-center gap-2">
+                  {session?.user?.image ? (
+                    <Image src={session.user.image} alt="avatar" width={32} height={32} className="rounded-full object-cover" />
+                  ) : (
+                    <span className="text-lg font-bold">{session?.user?.name?.charAt(0) || "U"}</span>
+                  )}
+                  <div>
+                    <div className="font-semibold">{session?.user?.name || session?.user?.email}</div>
+                    <div className="text-xs text-dsectext">{session?.user?.email}</div>
+                  </div>
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="ml-auto text-red-600 hover:text-red-800 text-xl"
+                  title="Logout"
+                >
+                  <FaSignOutAlt />
+                </button>
+              </div>
+            </SheetContent>
+          </Sheet>
         ) : (
-          <span>
-            <Link className={`${isActive('/login') ? 'text-dgreen dark:text-dred' : 'text-black dark:text-white'} hover:dark:text-white hover:text-dgreen hover:shadow-2xl hover:shadow-white`} href="/login">Log In</Link>/
-            <Link className={`${isActive('/signup') ? 'text-dgreen dark:text-dred' : 'text-black dark:text-white'} hover:dark:text-white hover:text-dgreen hover:shadow-2xl hover:shadow-white`} href="/signup">Sign Up</Link>
+          <span className='flex items-center md:gap-4'>
+            <Link className={`${isActive('/login') ? 'text-dgreen dark:text-dred' : 'text-black dark:text-white'} hover:dark:text-white hover:text-dgreen hover:shadow-2xl hover:shadow-white border-2 px-2 py-1 rounded border-dgreen dark:border-dred font-medium max-md:text-sm`} href="/login">Log In</Link> 
+            <span className='max-md:hidden text-black dark:text-white'>
+              /
+            </span>
+            <Link className={`${isActive('/signup') ? 'text-dgreen dark:text-dred' : 'text-black dark:text-white'} hover:dark:text-white hover:text-dgreen hover:shadow-2xl hover:shadow-white border-2 px-2 py-1 rounded border-dgreen dark:border-dred font-medium max-md:text-sm max-md:hidden`} href="/signup">Sign Up</Link>
           </span>
         )}
       </div>
