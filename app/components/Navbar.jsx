@@ -77,7 +77,7 @@ const Navbar = () => {
   return (
     <nav className={` ${font.className} flex justify-between px-10 2xl:px-20 bg-transparent font-sans font-semibold text-lg py-4 backdrop-blur-2xl w-full z-50 text-black dark:text-white fixed 2xl:text-xl`}>
       <div>
-        <Link href={`/`} className='tracking-widest bg-red-500 '>BIKEY</Link>
+        <Link href={`/`} className='tracking-widest'>BIKEY</Link>
       </div>
 
       <div className='absolute left-1/2 right-1/2 hover:shadow-2xl hover:shadow-white '>
