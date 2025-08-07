@@ -141,11 +141,11 @@ const Navbar = () => {
           </Sheet>
         ) : (
           <span className='flex items-center md:gap-4'>
-            <Link className={`${isActive('/login') ? 'text-dgreen dark:text-dred' : 'text-black dark:text-white'} hover:dark:text-white hover:text-dgreen hover:shadow-2xl hover:shadow-white border-2 px-2 py-1 rounded border-dgreen dark:border-dred font-medium max-md:text-sm`} href="/login">Log In</Link> 
-            <span className='max-md:hidden text-black dark:text-white'>
-              /
+            <Link className={`${isActive('/login') ? 'text-dgreen dark:text-dred' : 'text-black dark:text-white'} hover:dark:text-dred hover:text-dgreen   border-2 px-2 py-1 rounded hover:border-dgreen hover:dark:border-dred font-medium max-md:text-sm`} href="/login">Log In</Link> 
+            <span className='max-md:hidden text-black dark:text-white text-sm'>
+              or
             </span>
-            <Link className={`${isActive('/signup') ? 'text-dgreen dark:text-dred' : 'text-black dark:text-white'} hover:dark:text-white hover:text-dgreen hover:shadow-2xl hover:shadow-white border-2 px-2 py-1 rounded border-dgreen dark:border-dred font-medium max-md:text-sm max-md:hidden`} href="/signup">Sign Up</Link>
+            <Link className={`${isActive('/signup') ? 'text-dgreen dark:text-dred' : 'text-black dark:text-white'} hover:dark:text-dred hover:text-dgreen  border-2 px-2 py-1 rounded hover:border-dgreen hover:dark:border-dred font-medium max-md:text-sm max-md:hidden`} href="/signup">Sign Up</Link>
           </span>
         )}
       </div>
