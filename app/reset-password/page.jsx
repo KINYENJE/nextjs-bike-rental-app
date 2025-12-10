@@ -8,7 +8,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 const font = Orbitron({weight: "800", subsets: ['latin']})
 const fontSyne = Syne({weight: "400", subsets: ['latin']})
 
-const ResetPassword = () => {
+function ResetPasswordForm() {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [loading, setLoading] = useState(false)
@@ -114,4 +114,10 @@ const ResetPassword = () => {
   )
 }
 
-export default ResetPassword
+export default function ResetPassword() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ResetPasswordForm />
+    </Suspense>
+  )
+}
