@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import { Orbitron, Syne } from 'next/font/google'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
