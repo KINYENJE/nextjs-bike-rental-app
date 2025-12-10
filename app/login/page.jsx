@@ -154,6 +154,12 @@ const Page = () => {
             <p className='text-dsectext dark:text-dsectext'>Don&apos;t have an account?</p>
             <Link href="/login" className='text-dgreen dark:text-dred font-medium hover:underline underline-offset-2'>Sign Up</Link>
           </div>
+
+          <div className='flex justify-center pt-2'>
+            <Link href="/forgot-password" className='text-dsectext hover:text-dgreen dark:hover:text-dred text-sm hover:underline underline-offset-2'>
+              Forgot Password?
+            </Link>
+          </div>
         </div>
        
       </div>
