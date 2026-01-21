@@ -9,13 +9,13 @@ const font = Kumbh_Sans({ weight: "600", subsets: ["latin"] });
 
 export default function Home() {
   return (
-    <main className="z-0 overflow-hidden">
+    <main className="z-0 ">
 
       <div className="flex flex-row h-[100vh] text-black dark:text-white z-0 overflow-hidden">
 
-        <div className="flex flex-col text-left justify-center overflow-y-hidden w-1/2 bg-lsecondarybg dark:bg-dsecondarybg backdrop-blur-3xl z-30 ">
-          <div className=" flex flex-col h-2/3 pl-14 mt-32 2xl:mt-40 2xl:pl-20 gap-4">
-            <h1 className={` ${font.className} text-4xl 2xl:text-5xl font-bold text-black dark:text-white leading-snug 2xl:leading-normal w-1/2 `}>Ride the streets <br/>  
+        <div className="flex flex-col text-left justify-center overflow-y-hidden w-full md:w-1/2  bg-lsecondarybg dark:bg-dsecondarybg backdrop-blur-3xl z-30 ">
+          <div className=" flex flex-col h-2/3 px-8 md:pl-14 mt-32 2xl:mt-40 2xl:pl-20 gap-4">
+            <h1 className={` ${font.className} text-4xl 2xl:text-5xl font-bold text-black dark:text-white leading-snug 2xl:leading-normal md:w-1/2 `}>Ride the streets <br/>  
             <span className="dark:text-dsectext text-stone-500">with</span> <br/>
             <span className="dark:text-dred text-dgreen tracking-wider ">BIKEY&apos;S BIKES.</span>
             </h1>
@@ -26,24 +26,19 @@ export default function Home() {
 
           </div> 
 
-            <div className="mb-8 h-1/3 ">
-          
-             <Image src={bikesm} alt="small bike" width={250} height={100} />
-            </div>
+          <div className="mb-8 h-1/3 z-50 ">
+        
+            <Image src={bikesm} alt="small bike" width={250} height={100} />
+          </div>
 
-         
-          
-        </div>   
-
-
-        <div className="overflow-hidden">
-          <div className="-bottom-10 -left-20 dark:bg-dred bg-dgreen rounded-full absolute  blur-3xl px-4 py-3 w-[450px] h-[450px] overflow-hidden" ></div>
+          <div className="overflow-hidden">
+          <div className="-bottom-32 -left-32 dark:bg-dred bg-dgreen rounded-full absolute  blur-3xl px-4 py-3 w-[450px] h-[450px] overflow-hidden" ></div>
         </div>
 
-
+        </div>   
 
             
-        <div className="w-1/2 flex items-center overflow-hidden ">
+        <div className="md:w-1/2 hidden md:flex items-center overflow-hidden ">
             
           <Image src={bikelg} alt="big bike" width={500} height={100} />
         </div>
