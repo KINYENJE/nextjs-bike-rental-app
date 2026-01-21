@@ -31,7 +31,7 @@ const ForgotPassword = () => {
       const result = await response.json()
 
       if (result.status === 'ok') {
-        toast.success('Password reset email sent! Check your inbox.')
+        toast.success(result.message || 'Reset link sent to your email')
         router.push('/login')
       } else {
         toast.error(result.message || 'Failed to send reset email')
