@@ -106,19 +106,19 @@ const Page = () => {
 
 
   return (
-    <section className='mx-auto container py-16 h-[100vh] flex justify-center items-center'>
-      <div className=' shadow-lg bg-black w-[1080px] min-h-[500px] flex mt-10 '>
-        <div className='bg-white w-[550px] relative flex justify-center'> 
+    <section className='mx-auto container  h-[100vh] flex justify-center items-center'>
+      <div className=' shadow-lg bg-black flex flex-col md:flex-row w-full mx-3 md:mx-6 lg:mx-8 xl:mx-12 rounded-lg '>
+        <div className='bg-white md:w-1/2 relative flex justify-center max-md:hidden'> 
           <h1 className={`text-white mt-14 z-30 text-2xl tracking-widest absolute ${font.className} font-medium `}>Welcome back to 
           <span className='text-dgreen dark:text-dred font-extrabold'> BIKEY!</span> </h1>
-          <div className='w-full z-10 absolute bg-black min-h-[500px] opacity-40 flex justify-center'>
-            
+          <div className='w-full z-10 absolute bg-black h-full opacity-40 flex justify-center'>
           </div>
+
           <Image src={"/loginbike.jpg"} alt='login bike' width={900} height={500} className='h-full w-full object-cover object-right-top z-0 ' />
          
         </div>
 
-        <div className='w-auto flex flex-col px-14 items-center justify-center '>
+        <div className='md:w-1/2 flex flex-col  items-center justify-center px-8 py-12  '>
 
           <button
             type="button"
