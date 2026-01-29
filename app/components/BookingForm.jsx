@@ -102,13 +102,13 @@ const BookingForm = ({price, bikeId, bikeType, bikeOwner, bikeLocation }) => {
   
   
   return (
-    <form action="POST" onSubmit={handleBooking} className='flex flex-col md:flex-row bg-sky-100 dark:bg-black opacity-80  md:rounded-full pt-6 px-4  md:px-10 py-2 gap-3 shadow-2xl justify-center items-center'>
-      <div className='md:w-3/4 flex flex-col bg-red-600'>
+    <form action="POST" onSubmit={handleBooking} className='flex flex-col md:flex-row bg-sky-100 dark:bg-black opacity-80 rounded-xl  md:rounded-full pt-6 px-4  md:px-10 py-2 gap-3 shadow-2xl justify-center items-center'>
+      <div className='md:w-3/4 flex flex-col '>
         <label htmlFor="" className='text-black dark:text-white'>Starting Time: </label>
         <input type="datetime-local" placeholder='Enter your booking time'   required value={startDate} onChange={(e) => setStartDate(e.target.value)}
          className=' p-2 my-2 rounded-full' step="3600" />
       </div>
-      <div className='md:w-3/4 flex flex-col bg-blue-600'>
+      <div className='md:w-3/4 flex flex-col '>
         <label htmlFor="" className='text-black dark:text-white'>Ending Time: </label>
         <input type="datetime-local" placeholder='Enter your booking time' step={"3600"}
         value={endDate} onChange={(e) => setEndDate(e.target.value)}

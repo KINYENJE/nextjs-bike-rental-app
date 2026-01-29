@@ -40,7 +40,7 @@ const page = async ({params}) => {
   console.log(bikeObj)
 
   return (
-    <section className='w-full h-[100vh] xl:mx-11 flex justify-center items-center' >
+    <section className='w-full h-[100vh] xl:mx-11 flex justify-center items-center overflow-x-hidden max-md:py-10' >
 
      {bikeObj.map((bike) => (
 
@@ -54,8 +54,8 @@ const page = async ({params}) => {
         </div>
 
 
-        <div className='w-full xl:w-1/2 flex flex-col items-center justify-center  lg:px-14'>
-          <div className='absolute '>
+        <div className='w-full xl:w-1/2 flex flex-col items-center justify-center relative lg:px-14'>
+          <div className='absolute'>
             <BlackTriangle />
           </div>
 
@@ -72,7 +72,7 @@ const page = async ({params}) => {
           </div>
 
           {/** form fields for booking time and price */}
-          <div className='relative z-20 top-20 '>
+          <div className='  '>
             
             <BookingForm price={bike.price} bikeId={bike._id} bikeOwner={bike.owner} bikeType={bike.bikeType.name} bikeLocation={bike.location.name} />
           </div>
