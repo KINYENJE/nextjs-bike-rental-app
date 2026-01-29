@@ -14,7 +14,7 @@ export default function Home() {
       <div className="flex flex-row h-[100vh] text-black dark:text-white z-0 overflow-hidden">
 
         <div className="flex flex-col text-left justify-center overflow-y-hidden w-full md:w-1/2  bg-lsecondarybg dark:bg-dsecondarybg backdrop-blur-3xl z-30 ">
-          <div className=" flex flex-col h-2/3 px-8 md:pl-14 mt-32 2xl:mt-40 2xl:pl-20 gap-4">
+          <div className=" flex flex-col h-2/3 pl-10  md:pl-14 mt-32 2xl:mt-40 2xl:pl-20 gap-4 text-nowrap">
             <h1 className={` ${font.className} text-4xl 2xl:text-5xl font-bold text-black dark:text-white leading-snug 2xl:leading-normal md:w-1/2 `}>Ride the streets <br/>  
             <span className="dark:text-dsectext text-stone-500">with</span> <br/>
             <span className="dark:text-dred text-dgreen tracking-wider ">BIKEY&apos;S BIKES.</span>
