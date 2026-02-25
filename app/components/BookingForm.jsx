@@ -1,5 +1,5 @@
 "use client"
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import toast from 'react-hot-toast'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
@@ -7,14 +7,28 @@ import { useRouter } from 'next/navigation'
 const BookingForm = ({price, bikeId, bikeType, bikeOwner, bikeLocation }) => {
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
+  const [finalPrice, setFinalPrice] = useState(0)
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   const { data: session } = useSession();
   const router = useRouter();
+  // console.log("Session data:", session);
+  const email = session?.user?.email;
+
+  useEffect(() => {
+    if (startDate && endDate) {
+      const startTime = new Date(startDate).getTime();
+      const endTime = new Date(endDate).getTime();
+      const timeDiff = (endTime - startTime) / 1000 / 60 / 60;
+      setFinalPrice(Math.abs(timeDiff * price));
+    } else {
+      setFinalPrice(0);
+    }
+  }, [startDate, endDate, price]);
 
   const checkIdPic = async () => {
-    const email = session.user.email;
+    
     console.log("User email:", email);
 
     if (!email) {
@@ -58,9 +72,8 @@ const BookingForm = ({price, bikeId, bikeType, bikeOwner, bikeLocation }) => {
     // for signed in users check if idpic is available in database
     const hasIdPic = await checkIdPic()
     if (!hasIdPic) {
-      return
+      return // return
     }
-
     
     const startTime = new Date(startDate).getTime()
     const endTime = new Date(endDate).getTime()
@@ -73,7 +86,7 @@ const BookingForm = ({price, bikeId, bikeType, bikeOwner, bikeLocation }) => {
     const booking = {
       startTime,
       endTime,
-      finalPrice,
+      price: finalPrice,
       bikeId,
       bikeType,
       bikeOwner,
@@ -82,11 +95,10 @@ const BookingForm = ({price, bikeId, bikeType, bikeOwner, bikeLocation }) => {
     }
     console.log(booking)
 
-    const response = await fetch(`${API_URL}/api/booking`, {
+    const response = await fetch(`${API_URL}/api/booking?email=${email}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        
       },
       body: JSON.stringify(booking)
     })
@@ -118,7 +130,7 @@ const BookingForm = ({price, bikeId, bikeType, bikeOwner, bikeLocation }) => {
       <div className='md:w-1/4 w-full flex flex-col '>
         <label htmlFor="" className='text-black dark:text-white'>Price: </label>
         <button  type='submit' className='bg-dgreen dark:bg-dred font-medium p-2 rounded-full my-2 capitalize text-black w-full'>
-            {price}/hr.
+            {finalPrice > 0 ? `${finalPrice}/-` : `${price}/hr.`}
         </button>
       </div>
     </form>

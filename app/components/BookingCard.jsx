@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { BsTrash3 } from "react-icons/bs";
 import { Orbitron } from 'next/font/google'
+import {useSession} from 'next-auth/react'
 
 
 const fontOrbitron = Orbitron({weight: "700", subsets: ['latin']})
@@ -17,22 +18,32 @@ const BookingCard = () => {
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
+  const { data: session} = useSession()
+
+  const checKUserLoggedIn = () => {
+    if (!session || !session.user || !session.user.email) {
+      toast.error('Please sign in to view your bookings')
+      return false
+    }
+    return true
+  }
+
+
 
 
   const findBookings = async () => {
-    const response = await fetch(`${API_URL}/api/bookings`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application ',
-        'authorization': localStorage.getItem('token')
-      }
-    })
+    if (!checKUserLoggedIn()) {
+      return
+    }
 
+    const email = session.user.email
+    const response = await fetch(`${API_URL}/api/bookings?email=${email}`)
     const result = await response.json()
     console.log(result)
+
     if (result.status === 'ok') {
       setBookings(result.bookings)
-      toast.success('Bookings fetched successfully')
+      toast.success(result.message)
     } else {
       toast.error('Error fetching bookings')
     }

@@ -99,7 +99,7 @@ const Navbar = () => {
             </SheetTrigger>
             <SheetContent
               side="right"
-              className="bg-transparent bg-opacity-30 text-black dark:text-white/80 backdrop-blur-lg border border-dprimarybg shadow-lg flex flex-col justify-between p-0"
+              className="bg-transparent bg-opacity-30 text-white/80 backdrop-blur-lg border border-dprimarybg shadow-lg flex flex-col justify-between p-0"
             >
               {/* Header */}
               <div className="p-6 border-b border-dgreen dark:border-dred">
@@ -111,7 +111,7 @@ const Navbar = () => {
                 <Link href="/bikes" className="hover:text-dgreen dark:hover:text-dred font-semibold">Bikes</Link>
                 <Link href="/profile" className="hover:text-dgreen dark:hover:text-dred font-semibold">Profile</Link>
                 <Link href="/bookings" className="hover:text-dgreen dark:hover:text-dred font-semibold">My Bookings</Link>
-                {isOwner && <Link className={`${isActive('/studio') ? 'text-dgreen dark:text-dred' : 'text-black dark:text-white'} hover:dark:text-white hover:text-dgreen hover:shadow-2xl hover:shadow-white`} href="/studio">Studio</Link>}
+                {/* {isOwner && <Link className={`${isActive('/studio') ? 'text-dgreen dark:text-dred' : ''} hover:dark:text-white hover:text-dgreen hover:shadow-2xl hover:shadow-white font-semibold`} href="/studio">Studio</Link>} */}
                 <Link href="/history" className="hover:text-dgreen dark:hover:text-dred font-semibold">History</Link>
                 {isOwner && <Link href="/studio" className="hover:text-dgreen dark:hover:text-dred font-semibold">Studio</Link>}
                 {/* Add more links as needed */}
