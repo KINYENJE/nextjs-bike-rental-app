@@ -106,9 +106,9 @@ const BookingForm = ({price, bikeId, bikeType, bikeOwner, bikeLocation }) => {
     const result = await response.json()
     console.log(result)
     if (result.status === 'ok') {
-      toast.success('Booking successful')
+      toast.success(result.message)
     } else {
-      toast.error('Booking failed')
+      toast.error(result.message || 'Booking failed')
     }
   }
   
