@@ -21,7 +21,7 @@ export default function Home() {
             </h1>
             
             <button className={` ${font.className} py-1 px-2 mt-8 text-md max-w-fit  dark:bg-dred bg-dgreen rounded-lg hover:shadow-dgreen hover:dark:shadow-dred shadow-[0px_4px_20px_#00000040]  font-bold text-black tracking-widest 2xl:tracking-wide 2xl:text-xl 2xl:py-2 2xl:px-4`}>   
-                    <Link href="/bikes">Rent a Ride</Link>
+                    <Link href="/bikes">Rent a Bike</Link>
             </button>
 
           </div> 
