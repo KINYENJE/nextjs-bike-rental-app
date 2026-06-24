@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { GoNoEntry } from 'react-icons/go';
 import { BlackTriangle } from '../../components/icons'
 import BookingForm from '../../components/BookingForm';
+import BikeReviews from '../../components/BikeReviews';
 
 const fontOrbitron = Orbitron({ weight: '600', subsets: ['latin'] })
 const fontTourney = Tourney({ weight: '600', subsets: ['latin'] })
@@ -40,11 +41,12 @@ const page = async ({params}) => {
   console.log(bikeObj)
 
   return (
-    <section className='w-full h-[100vh] xl:mx-11 flex justify-center items-center overflow-x-hidden max-md:py-10' >
+    <section className='w-full overflow-x-hidden' >
 
      {bikeObj.map((bike) => (
 
-      <div key={bike._id} className='flex flex-col xl:flex-row w-full justify-center items-center gap-8 md:gap-12 max-md:mt-20'>
+      <div key={bike._id}>
+       <div className='min-h-screen flex flex-col xl:flex-row w-full justify-center items-center gap-8 md:gap-12 px-4 pt-28 pb-12 xl:px-11'>
         <div className='xl:w-1/2 px-2 justify-center items-center flex w-full max-md:pt-20 '>
           <div className='  flex items-center justify-center w-fit  rounded-xl '>
             <Image src={bike.imageUrl} alt={"bike image"} width={396} height={300} className=' object-fill  rounded-lg w-[396px] h-[324px]' />
@@ -73,11 +75,17 @@ const page = async ({params}) => {
 
           {/** form fields for booking time and price */}
           <div className='  '>
-            
+
             <BookingForm price={bike.price} bikeId={bike._id} bikeOwner={bike.owner} bikeType={bike.bikeType.name} bikeLocation={bike.location.name} />
           </div>
-          
+
         </div>
+       </div>
+
+       {/* Reviews section */}
+       <div className='px-4 sm:px-8 pb-20'>
+         <BikeReviews bikeId={bike._id} />
+       </div>
       </div>
      ))}
 

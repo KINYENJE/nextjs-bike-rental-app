@@ -11,6 +11,7 @@ export interface Bike {
   bikeType?: any;
   brand?: any;
   price: number;
+  rating?: { average: number; count: number };
 }
 
 export interface BikeType {

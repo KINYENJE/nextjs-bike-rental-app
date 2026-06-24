@@ -26,10 +26,30 @@ async function getAllBikes() {
   return bikes
 }
 
+// Pull the cumulative rating per bike from the backend. Non-fatal: if the API
+// is unreachable, bikes simply render with "No reviews yet".
+async function getRatingSummary(): Promise<Record<string, { average: number; count: number }>> {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/reviews/summary`, {
+      cache: 'no-store',
+    })
+    if (!res.ok) return {}
+    const data = await res.json()
+    return data.summary || {}
+  } catch {
+    return {}
+  }
+}
+
 export const revalidate = 60
 
 const Page = async () => {
-  const bikes: Bike[] = await getAllBikes()
+  const [bikes, ratingSummary] = await Promise.all([getAllBikes(), getRatingSummary()])
+
+  const bikesWithRatings: Bike[] = bikes.map((bike: Bike) => ({
+    ...bike,
+    rating: ratingSummary[bike._id] || { average: 0, count: 0 },
+  }))
 
   return (
     <section className="mx-auto max-w-7xl px-4 sm:px-8 min-h-screen pt-28 pb-16">
@@ -37,7 +57,7 @@ const Page = async () => {
         Browse <span className="text-dgreen dark:text-dred">Bikes</span>
       </h1>
 
-      <BikesBrowser bikes={bikes} />
+      <BikesBrowser bikes={bikesWithRatings} />
     </section>
   )
 }
