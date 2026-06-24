@@ -12,6 +12,7 @@ export interface Bike {
   brand?: any;
   price: number;
   rating?: { average: number; count: number };
+  availability?: { available: boolean; until?: string };
 }
 
 export interface BikeType {

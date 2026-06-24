@@ -35,10 +35,26 @@ const fetchBike = async (bikeId) => {
   return bike
 }
 
+// Bikes currently booked (derived live from bookings). Non-fatal on failure.
+const fetchAvailability = async () => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/bikes/availability`, {
+      cache: 'no-store',
+    })
+    if (!res.ok) return {}
+    const data = await res.json()
+    return data.unavailable || {}
+  } catch {
+    return {}
+  }
+}
+
 
 const page = async ({params}) => {
-  const bikeObj = await fetchBike(params.bikeId)
-  console.log(bikeObj)
+  const [bikeObj, unavailable] = await Promise.all([
+    fetchBike(params.bikeId),
+    fetchAvailability(),
+  ])
 
   return (
     <section className='w-full overflow-x-hidden' >
@@ -71,6 +87,21 @@ const page = async ({params}) => {
           <GoNoEntry />
           </p> : <p className={`${fontSyne.className} md:text-lg text-sm text-black dark:text-white my-6 md:my-24`}>{bike.description}</p>}
           
+          </div>
+
+          {/** availability status */}
+          <div className='z-20 mb-3'>
+            {unavailable[bike._id] ? (
+              <span className='flex items-center gap-2 text-sm font-semibold text-black dark:text-white bg-black/10 dark:bg-white/10 px-3 py-1.5 rounded-full'>
+                <span className='w-2 h-2 rounded-full bg-amber-400' />
+                Booked until {new Date(unavailable[bike._id].until).toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}
+              </span>
+            ) : (
+              <span className='flex items-center gap-2 text-sm font-semibold text-emerald-700 dark:text-emerald-400 bg-emerald-500/15 px-3 py-1.5 rounded-full'>
+                <span className='w-2 h-2 rounded-full bg-emerald-500' />
+                Available now
+              </span>
+            )}
           </div>
 
           {/** form fields for booking time and price */}

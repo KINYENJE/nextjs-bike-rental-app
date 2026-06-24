@@ -12,6 +12,7 @@ const fontTourney = Tourney({ weight: "600", subsets: ['latin'] })
 
 const BikeCard: React.FC<BikeCardProps> = ({ vertical, horizontal, ...bike }) => {
   const hasBrand = bike.brand?.name && bike.brand.name !== "not available"
+  const isAvailable = bike.availability?.available !== false
 
   return (
     <Link
@@ -40,6 +41,16 @@ const BikeCard: React.FC<BikeCardProps> = ({ vertical, horizontal, ...bike }) =>
             {bike.bikeType.name}
           </span>
         )}
+
+        {/* Availability badge */}
+        <span
+          className={`absolute top-3 left-3 flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 rounded-full backdrop-blur-sm ${
+            isAvailable ? 'bg-emerald-500/85 text-white' : 'bg-black/60 text-white'
+          }`}
+        >
+          <span className={`w-1.5 h-1.5 rounded-full ${isAvailable ? 'bg-white' : 'bg-amber-400'}`} />
+          {isAvailable ? 'Available' : 'Booked'}
+        </span>
       </div>
 
       {/* Body */}

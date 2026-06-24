@@ -41,14 +41,36 @@ async function getRatingSummary(): Promise<Record<string, { average: number; cou
   }
 }
 
+// Bikes that are booked right now, with the time they free up. Derived live
+// from bookings, so it must never be cached.
+async function getAvailability(): Promise<Record<string, { until: string }>> {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/bikes/availability`, {
+      cache: 'no-store',
+    })
+    if (!res.ok) return {}
+    const data = await res.json()
+    return data.unavailable || {}
+  } catch {
+    return {}
+  }
+}
+
 export const revalidate = 60
 
 const Page = async () => {
-  const [bikes, ratingSummary] = await Promise.all([getAllBikes(), getRatingSummary()])
+  const [bikes, ratingSummary, unavailable] = await Promise.all([
+    getAllBikes(),
+    getRatingSummary(),
+    getAvailability(),
+  ])
 
-  const bikesWithRatings: Bike[] = bikes.map((bike: Bike) => ({
+  const bikesWithMeta: Bike[] = bikes.map((bike: Bike) => ({
     ...bike,
     rating: ratingSummary[bike._id] || { average: 0, count: 0 },
+    availability: unavailable[bike._id]
+      ? { available: false, until: unavailable[bike._id].until }
+      : { available: true },
   }))
 
   return (
@@ -57,7 +79,7 @@ const Page = async () => {
         Browse <span className="text-dgreen dark:text-dred">Bikes</span>
       </h1>
 
-      <BikesBrowser bikes={bikesWithRatings} />
+      <BikesBrowser bikes={bikesWithMeta} />
     </section>
   )
 }

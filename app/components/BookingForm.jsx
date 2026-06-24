@@ -16,12 +16,18 @@ const BookingForm = ({price, bikeId, bikeType, bikeOwner, bikeLocation }) => {
   // console.log("Session data:", session);
   const email = session?.user?.email;
 
+  // Mirrors the backend billing: charged per whole hour, minimum 1 hour, integer price.
+  const calculatePrice = (start, end) => {
+    const rawHours = Math.abs((end - start) / 1000 / 60 / 60);
+    const billableHours = Math.max(1, Math.ceil(rawHours - 1e-9));
+    return Math.round(billableHours * price);
+  };
+
   useEffect(() => {
     if (startDate && endDate) {
       const startTime = new Date(startDate).getTime();
       const endTime = new Date(endDate).getTime();
-      const timeDiff = (endTime - startTime) / 1000 / 60 / 60;
-      setFinalPrice(Math.abs(timeDiff * price));
+      setFinalPrice(calculatePrice(startTime, endTime));
     } else {
       setFinalPrice(0);
     }
@@ -78,15 +84,10 @@ const BookingForm = ({price, bikeId, bikeType, bikeOwner, bikeLocation }) => {
     const startTime = new Date(startDate).getTime()
     const endTime = new Date(endDate).getTime()
 
-    const timeDiff = (endTime - startTime) / 1000 / 60 / 60
-    console.log(timeDiff)
-    // absolute value of final price
-    const finalPrice = Math.abs(timeDiff * price)
-
     const booking = {
       startTime,
       endTime,
-      price: finalPrice,
+      price: calculatePrice(startTime, endTime),
       bikeId,
       bikeType,
       bikeOwner,
