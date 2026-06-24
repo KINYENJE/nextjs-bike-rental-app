@@ -1,20 +1,13 @@
-
-
 import React from 'react'
 import { client } from '../../sanity/lib/client'
-import { Bike } from '../../types';
-// import Image from 'next/image';
-// import { urlForImage } from '../../sanity/lib/image';
-import BikeCard from '../components/BikeCard';
-// import FilterList from '../components/FilterList';
+import { Bike } from '../../types'
+import BikesBrowser from '../components/BikesBrowser'
+import { Tourney } from 'next/font/google'
 
-// import { BikesConstantData } from '../constants';
-
-
-
+const fontTourney = Tourney({ weight: '600', subsets: ['latin'] })
 
 async function getAllBikes() {
-  const query = `*[_type == "bike"] {
+  const query = `*[_type == "bike"] | order(_createdAt desc) {
     _id,
     "imageUrl":image.asset->url,
     _createdAt,
@@ -27,55 +20,26 @@ async function getAllBikes() {
     location->{name, _id},
     bikeType->{name, _id},
     _updatedAt,
-
 }`
 
   const bikes = await client.fetch(query)
   return bikes
 }
 
+export const revalidate = 60
 
-
-
-export const revalidate = 60;
-
-
-// eslint-disable-next-line @next/next/no-async-client-component
 const Page = async () => {
-  const bikes : Bike[] = await getAllBikes()
-  // const bikes : Bike[] =  BikesConstantData 
-  console.log(bikes , 'bikes')
-  
+  const bikes: Bike[] = await getAllBikes()
 
-
-
-  
   return (
-    <section className='mx-11 min-h-[100vh] ' >
-      <div className=' mx-auto px-14 pt-24'>
-        <h1 className='text-4xl font-bold'>Bikes</h1>
-      </div>
+    <section className="mx-auto max-w-7xl px-4 sm:px-8 min-h-screen pt-28 pb-16">
+      <h1 className={`text-4xl sm:text-5xl font-bold mb-8 text-black dark:text-white ${fontTourney.className}`}>
+        Browse <span className="text-dgreen dark:text-dred">Bikes</span>
+      </h1>
 
-      <div className='   flex justify-between items-center '>
-
-        {/** filter section */}
-       {/* <FilterList /> */}
-
-       
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 gap-y-10 w-full'>
-          {bikes.map((bike) => (
-           <>
-            <BikeCard key={bike._id} {...bike} />
-            <BikeCard key={bike._id} {...bike} />
-            <BikeCard key={bike._id} {...bike} />
-            </>
-
-          ))}
-        </div>
-      </div>
-
+      <BikesBrowser bikes={bikes} />
     </section>
   )
 }
 
-export default Page 
+export default Page
