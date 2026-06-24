@@ -16,11 +16,13 @@ const BookingForm = ({price, bikeId, bikeType, bikeOwner, bikeLocation }) => {
   // console.log("Session data:", session);
   const email = session?.user?.email;
 
-  // Mirrors the backend billing: charged per whole hour, minimum 1 hour, integer price.
+  // Mirrors the backend billing: 15-minute increments rounded down, 1-hour
+  // minimum, integer price.
   const calculatePrice = (start, end) => {
-    const rawHours = Math.abs((end - start) / 1000 / 60 / 60);
-    const billableHours = Math.max(1, Math.ceil(rawHours - 1e-9));
-    return Math.round(billableHours * price);
+    const totalMinutes = Math.abs((end - start) / 1000 / 60);
+    const blocks = Math.floor(totalMinutes / 15 + 1e-9);
+    const billableMinutes = Math.max(60, blocks * 15);
+    return Math.round((billableMinutes / 60) * price);
   };
 
   useEffect(() => {
@@ -119,11 +121,11 @@ const BookingForm = ({price, bikeId, bikeType, bikeOwner, bikeLocation }) => {
       <div className='md:w-3/4 flex flex-col '>
         <label htmlFor="" className='text-black dark:text-white'>Starting Time: </label>
         <input type="datetime-local" placeholder='Enter your booking time'   required value={startDate} onChange={(e) => setStartDate(e.target.value)}
-         className=' p-2 my-2 rounded-full' step="3600" />
+         className=' p-2 my-2 rounded-full' step="900" />
       </div>
       <div className='md:w-3/4 flex flex-col '>
         <label htmlFor="" className='text-black dark:text-white'>Ending Time: </label>
-        <input type="datetime-local" placeholder='Enter your booking time' step={"3600"}
+        <input type="datetime-local" placeholder='Enter your booking time' step={"900"}
         value={endDate} onChange={(e) => setEndDate(e.target.value)}
          className=' p-2 my-2 rounded-full' />
       </div>
