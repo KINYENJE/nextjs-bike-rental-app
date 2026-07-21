@@ -44,6 +44,7 @@ const BookingCard = ({ variant = 'active' }) => {
   const [bookings, setBookings] = useState([])
   const [bikeImages, setBikeImages] = useState({})
   const [loading, setLoading] = useState(true)
+  const [payingId, setPayingId] = useState(null)
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL
   const { data: session, status: sessionStatus } = useSession()
@@ -93,6 +94,28 @@ const BookingCard = ({ variant = 'active' }) => {
       setLoading(false)
     }
   }, [sessionStatus])
+
+  const handlePay = async (bookingId) => {
+    if (!session?.user?.email) return
+    setPayingId(bookingId)
+    try {
+      const res = await fetch(`${API_URL}/api/payments/checkout?email=${encodeURIComponent(session.user.email)}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ bookingId }),
+      })
+      const result = await res.json()
+      if (result.status === 'ok' && result.checkoutUrl) {
+        window.location.href = result.checkoutUrl
+      } else {
+        toast.error(result.message || 'Could not start payment')
+        setPayingId(null)
+      }
+    } catch (err) {
+      toast.error('Could not start payment')
+      setPayingId(null)
+    }
+  }
 
   const handleCancel = async (id) => {
     if (!window.confirm('Are you sure you want to cancel this booking? This cannot be undone.')) {
@@ -190,6 +213,31 @@ const BookingCard = ({ variant = 'active' }) => {
                 <span className="text-xs pr-2 text-stone-500 dark:text-stone-400 font-extrabold">Status:</span>
                 {derived}
               </p>
+
+              {/* Payment status */}
+              <span
+                className={`text-[11px] font-semibold px-2.5 py-1 rounded-full ${
+                  booking.paymentStatus === 'paid'
+                    ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400'
+                    : 'bg-amber-500/15 text-amber-700 dark:text-amber-400'
+                }`}
+              >
+                {booking.paymentStatus === 'paid' ? 'Paid' : 'Unpaid'}
+              </span>
+
+              {variant === 'active' && booking.paymentStatus !== 'paid' && (
+                <button
+                  onClick={() => handlePay(booking._id)}
+                  disabled={payingId === booking._id}
+                  title="Pay for this booking"
+                  className={`flex items-center gap-2 bg-emerald-600 text-white rounded-lg px-3 py-2 text-sm font-semibold transition-opacity ${
+                    payingId === booking._id ? 'opacity-50 cursor-not-allowed' : 'hover:opacity-80'
+                  }`}
+                >
+                  {payingId === booking._id ? 'Redirecting…' : `Pay ${formatPrice(booking.price)}`}
+                </button>
+              )}
+
               {variant === 'active' && (
                 <button
                   onClick={() => handleCancel(booking._id)}

@@ -107,11 +107,33 @@ const BookingForm = ({price, bikeId, bikeType, bikeOwner, bikeLocation }) => {
     })
 
     const result = await response.json()
-    console.log(result)
-    if (result.status === 'ok') {
-      toast.success(result.message)
-    } else {
+
+    if (result.status !== 'ok') {
       toast.error(result.message || 'Booking failed')
+      return
+    }
+
+    toast.success('Booking reserved — redirecting to payment…')
+
+    // Hand off to the payment provider. The booking stays unpaid until the
+    // payment is confirmed, and can be paid later from "My Bookings".
+    try {
+      const payRes = await fetch(`${API_URL}/api/payments/checkout?email=${encodeURIComponent(email)}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ bookingId: result.booking._id }),
+      })
+      const payResult = await payRes.json()
+
+      if (payResult.status === 'ok' && payResult.checkoutUrl) {
+        window.location.href = payResult.checkoutUrl
+      } else {
+        toast.error(payResult.message || 'Could not start payment. You can pay from My Bookings.')
+        router.push('/bookings')
+      }
+    } catch (err) {
+      toast.error('Could not start payment. You can pay from My Bookings.')
+      router.push('/bookings')
     }
   }
   
